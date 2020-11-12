@@ -1,0 +1,103 @@
+[cloudera@quickstart ~]$ hive
+
+Logging initialized using configuration in jar:file:/usr/lib/hive/lib/hive-common-1.1.0-cdh5.13.0.jar!/hive-log4j.properties
+WARNING: Hive CLI is deprecated and migration to Beeline is recommended.
+hive> create table pokes1(foo string, bar string) row format delimited fields terminated by ',';
+OK
+Time taken: 17.47 seconds
+hive> load data local inpath '/home/cloudera/Documents/Table.csv' overwrite into table pokes1;
+Loading data to table default.pokes1
+Table default.pokes1 stats: [numFiles=1, numRows=0, totalSize=983, rawDataSize=0]
+OK
+Time taken: 1.17 seconds
+hive> select * from pokes1 where foo='2d393ae721dcc13ec2f78c6c43d0b2d516ea627e6b6d9c2e963e791b2728c679';
+Query ID = cloudera_20200829153232_95cbeb0a-8798-4fc6-9548-10615c552d35
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks is set to 0 since there's no reduce operator
+Starting Job = job_1598694591124_0001, Tracking URL = http://quickstart.cloudera:8088/proxy/application_1598694591124_0001/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1598694591124_0001
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0
+2020-08-29 15:33:02,229 Stage-1 map = 0%,  reduce = 0%
+2020-08-29 15:33:25,291 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 3.0 sec
+MapReduce Total cumulative CPU time: 3 seconds 0 msec
+Ended Job = job_1598694591124_0001
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1   Cumulative CPU: 3.0 sec   HDFS Read: 5418 HDFS Write: 79 SUCCESS
+Total MapReduce CPU Time Spent: 3 seconds 0 msec
+OK
+2d393ae721dcc13ec2f78c6c43d0b2d516ea627e6b6d9c2e963e791b2728c679	dataset_1.csv
+Time taken: 50.187 seconds, Fetched: 1 row(s)
+hive> select * from pokes1;
+OK
+Hashvalue	Filename
+2d393ae721dcc13ec2f78c6c43d0b2d516ea627e6b6d9c2e963e791b2728c679	dataset_1.csv
+2d393ae721dcc13ec2f78c6c43d0b2d516ea627e6b6d9c2e963e791b2728c680	dataset_2.csv
+2d393ae721dcc13ec2f78c6c43d0b2d516ea627e6b6d9c2e963e791b2728c681	dataset_3.csv
+2d393ae721dcc13ec2f78c6c43d0b2d516ea627e6b6d9c2e963e791b2728c682	dataset_4.csv
+2d393ae721dcc13ec2f78c6c43d0b2d516ea627e6b6d9c2e963e791b2728c683	dataset_5.csv
+2d393ae721dcc13ec2f78c6c43d0b2d516ea627e6b6d9c2e963e791b2728c684	dataset_6.csv
+2d393ae721dcc13ec2f78c6c43d0b2d516ea627e6b6d9c2e963e791b2728c685	dataset_7.csv
+2d393ae721dcc13ec2f78c6c43d0b2d516ea627e6b6d9c2e963e791b2728c686	dataset_8.csv
+2d393ae721dcc13ec2f78c6c43d0b2d516ea627e6b6d9c2e963e791b2728c687	dataset_9.csv
+2d393ae721dcc13ec2f78c6c43d0b2d516ea627e6b6d9c2e963e791b2728c688	dataset_10.csv
+2d393ae721dcc13ec2f78c6c43d0b2d516ea627e6b6d9c2e963e791b2728c689	dataset_11.csv
+02f506d1a1604bd4de28a0e63780ca991cf856e5e8812ae48416564a4179dcf2	dataset_12.csv
+Time taken: 0.189 seconds, Fetched: 13 row(s)
+hive> select * from pokes1 where foo='2d393ae721dcc13ec2f78c6c43d0b2d516ea627e6b6d9c2e963e791b2728c679';
+Query ID = cloudera_20200829160909_24543e65-4d23-4f67-be32-dd354fa1c96a
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks is set to 0 since there's no reduce operator
+Starting Job = job_1598694591124_0002, Tracking URL = http://quickstart.cloudera:8088/proxy/application_1598694591124_0002/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1598694591124_0002
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0
+2020-08-29 16:09:47,972 Stage-1 map = 0%,  reduce = 0%
+2020-08-29 16:10:04,636 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 2.66 sec
+MapReduce Total cumulative CPU time: 2 seconds 660 msec
+Ended Job = job_1598694591124_0002
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1   Cumulative CPU: 2.66 sec   HDFS Read: 5494 HDFS Write: 79 SUCCESS
+Total MapReduce CPU Time Spent: 2 seconds 660 msec
+OK
+2d393ae721dcc13ec2f78c6c43d0b2d516ea627e6b6d9c2e963e791b2728c679	dataset_1.csv
+Time taken: 35.341 seconds, Fetched: 1 row(s)
+hive> CREATE TABLE hbas_table_11(key string, value string)STORED BY 'org.apache.hadoop.hive.hbase.HBaseStorageHandler' WITH SERDEPROPERTIES ("hbase.columns.mapping" = ":key,cf1:val") TBLPROPERTIES ("hbase.table.name" = "11xyz");
+OK
+Time taken: 4.079 seconds
+hive> select * from hbas_table_11;
+OK
+Time taken: 0.217 seconds
+hive> 
+cloudera@quickstart ~]$ hbase shell
+20/08/29 16:12:23 INFO Configuration.deprecation: hadoop.native.lib is deprecated. Instead, use io.native.lib.available
+HBase Shell; enter 'help<RETURN>' for list of supported commands.
+Type "exit<RETURN>" to leave the HBase Shell
+Version 1.2.0-cdh5.13.0, rUnknown, Wed Oct  4 11:16:18 PDT 2017
+
+hbase(main):001:0> list
+TABLE                                                                           
+11xyz                                                                           
+1xyz                                                                            
+np1                                                                             
+np2                                                                             
+pt1                                                                             
+pt3                                                                             
+t1                                                                              
+t2                                                                              
+t3                                                                              
+xyz                                                                             
+10 row(s) in 0.3930 seconds
+
+=> ["11xyz", "1xyz", "np1", "np2", "pt1", "pt3", "t1", "t2", "t3", "xyz"]
+hbase(main):002:0> describe "11xyz"
+Table 11xyz is ENABLED                                                          
+11xyz                                                                           
+COLUMN FAMILIES DESCRIPTION                                                     
+{NAME => 'cf1', DATA_BLOCK_ENCODING => 'NONE', BLOOMFILTER => 'ROW', REPLICATION
+_SCOPE => '0', VERSIONS => '1', COMPRESSION => 'NONE', MIN_VERSIONS => '0', TTL 
+=> 'FOREVER', KEEP_DELETED_CELLS => 'FALSE', BLOCKSIZE => '65536', IN_MEMORY => 
+'false', BLOCKCACHE => 'true'}                                                  
+1 row(s) in 0.2140 seconds
+
+
